@@ -8,6 +8,11 @@ body {
 
 }
 
+.header{
+     margin: 0;
+    padding: 00px;
+
+}
 .nasa {
     color: white;
     text-align: center;
