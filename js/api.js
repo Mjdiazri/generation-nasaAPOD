@@ -1,16 +1,16 @@
-// Configuración global de la API
+// Configuración de credenciales y endpoint de la API de la NASA
 const API_KEY = 'eINdnnn7fiWUYjBQXPpqcHn2pvw0hcHjYpjoMAuK';
 const BASE_URL = 'https://api.nasa.gov/planetary/apod';
 
-// Referencias a elementos del DOM
+// Captura de elementos del DOM por sus IDs
 const apodContent = document.getElementById('apod-content');
 const fechaUsuario = document.getElementById('fecha');
-const btnFecha = document.getElementById('buscarFecha'); // Asegúrate que el ID coincida con tu HTML
+const btnFecha = document.getElementById('buscarFecha');
 
 /**
- * Obtiene y renderiza la APOD de la NASA.
- * Si no se pasa una fecha, la API devuelve la del día actual.
- * @param {string} date - Fecha en formato YYYY-MM-DD
+ * Consulta la API de la NASA para obtener la APOD.
+ * Si no recibe el parámetro 'date', la API devuelve por defecto la APOD de hoy.
+ * @param {string} date - Fecha en formato YYYY-MM-DD (opcional)
  */
 async function getApod(date = '') {
   apodContent.innerHTML = '<p>Cargando información de la NASA...</p>';
@@ -27,30 +27,30 @@ async function getApod(date = '') {
     renderApod(data);
   } catch (error) {
     console.error('Error al obtener APOD:', error);
-    apodContent.innerHTML = `<p class="error">Error al cargar la información: ${error.message}</p>`;
+    apodContent.innerHTML = `<p class="error" style="color: red;">Error al cargar la información: ${error.message}</p>`;
   }
 }
 
 /**
- * Renderiza el contenido de la APOD en el DOM
- * @param {Object} data - Datos devueltos por la API de la NASA
+ * Inyecta el contenido de la APOD en el DOM HTML
+ * @param {Object} data - Objeto con los datos devueltos por la API
  */
 function renderApod(data) {
-  // Conmutación entre imagen e iframe según el tipo de medio
+  // Manejo condicional por si la NASA entrega una imagen o un video
   const mediaElement = data.media_type === 'image'
-    ? `<img src="${data.url}" alt="${data.title}" class="apod-media">`
-    : `<iframe src="${data.url}" frameborder="0" allowfullscreen class="apod-media"></iframe>`;
+    ? `<img src="${data.url}" alt="${data.title}" style="max-width: 100%; height: auto;">`
+    : `<iframe src="${data.url}" frameborder="0" allowfullscreen style="width: 100%; height: 400px;"></iframe>`;
 
   apodContent.innerHTML = `
     <h2>${data.title}</h2>
-    <p class="date"><strong>Fecha:</strong> ${data.date}</p>
+    <p><strong>Fecha:</strong> ${data.date}</p>
     ${mediaElement}
-    <p class="explanation">${data.explanation}</p>
+    <p style="text-align: justify; line-height: 1.6;">${data.explanation}</p>
   `;
 }
 
 /**
- * Configura el límite máximo de fecha permitido (hoy) en el input
+ * Configura la fecha máxima permitida en el input de tipo date para evitar fechas futuras.
  */
 function setupDateLimits() {
   if (fechaUsuario) {
@@ -60,16 +60,16 @@ function setupDateLimits() {
 }
 
 // ==========================================
-// EVENTOS Y EJECUCIÓN
+// INICIALIZACIÓN Y EVENTOS DE INTERACCIÓN
 // ==========================================
 
-// Inicializar al cargar la página
+// Se ejecuta automáticamente al cargar el documento HTML
 document.addEventListener('DOMContentLoaded', () => {
   setupDateLimits();
-  getApod(); // Carga la APOD del día
+  getApod(); // Carga inicial de la APOD del día
 });
 
-// Evento para buscar por fecha seleccionada
+// Evento al hacer clic en el botón "Buscar"
 if (btnFecha && fechaUsuario) {
   btnFecha.addEventListener('click', () => {
     const fechaSeleccionada = fechaUsuario.value;
@@ -81,12 +81,11 @@ if (btnFecha && fechaUsuario) {
     }
 
     if (fechaSeleccionada > hoy) {
-      alert('No se pueden consultar fechas futuras.');
-      console.warn('Intento de búsqueda con fecha futura:', fechaSeleccionada);
+      alert('No puedes seleccionar fechas futuras.');
       return;
     }
 
-    // Consulta la API con la fecha elegida y renderiza los resultados
+    // Consulta y muestra la APOD de la fecha elegida
     getApod(fechaSeleccionada);
   });
 }
