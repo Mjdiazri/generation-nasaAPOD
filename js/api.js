@@ -56,7 +56,11 @@ if (btnFecha && fechaUsuario) {
     const hoy = new Date().toISOString().split('T')[0];
 
     if (!fechaSeleccionada) {
-      alert('Por favor selecciona una fecha válida.');
+      Swal.fire({
+        icon: "error",
+        title: "Fecha invalida",
+        text: "Por favor registra una fecha",
+      });
       return;
     }
 
