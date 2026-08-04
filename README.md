@@ -1,6 +1,6 @@
-# Proyecto 
+# Proyecto Laboratorio 
 ## Descripcion
-PrCrear una aplicación web interactiva que muestre la "Astronomy Picture of the Day"
+Crear una aplicación web interactiva que muestre la "Astronomy Picture of the Day"
 (APOD) de la NASA
 
 ## Key API:
