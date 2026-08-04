@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASA APOD Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>🌌 NASA Astronomy Picture of the Day</h1>
+  </header>
+
+  <main class="container">
+    <!-- Buscador de fechas -->
+    <section class="search-section">
+      <label for="apod-date">Selecciona una fecha:</label>
+      <input type="date" id="apod-date">
+      <button id="btn-search">Buscar</button>
+    </section>
+
+    <!-- Contenedor principal de la APOD -->
+    <section class="apod-card" id="apod-card">
+      <div id="apod-content">
+        <p>Cargando la imagen astronómica del día...</p>
+      </div>
+      <button id="btn-favorite" class="btn-fav" hidden>❤️ Guardar en Favoritos</button>
+    </section>
+
+    <!-- Sección de Favoritos -->
+    <section class="favorites-section">
+      <h2>⭐ Mis Favoritos</h2>
+      <ul id="favorites-list"></ul>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
