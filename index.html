@@ -9,27 +9,28 @@
 </head>
 
 <body>
+    <div class="container">
+        <h1>Imagen Astronómica del Día (NASA)</h1>
 
-    <h1>Imagen Astronómica del Día (NASA)</h1>
+        <!-- Sección de filtro de fecha -->
+        <div class="buscador">
+            <label for="fecha">Selecciona una fecha: </label>
+            <input type="date" id="fecha">
+            <button id="buscarFecha" class="buscarFecha">Buscar</button>
+            <p class="descubrimiento">Tu Descubrimiento</p>
 
-    <!-- Sección de filtro de fecha -->
-    <div class="buscador">
-        <label for="fecha">Selecciona una fecha: </label>
-        <input type="date" id="fecha">
-        <button id="buscarFecha" class="buscarFecha">Buscar</button>
-        <p class="descubrimiento">Tu Descubrimiento</p>
+        </div>
 
+        <div id="apod-content">
+            <p>Cargando la imagen astronómica del día...</p>
+        </div>
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="./js/api.js"></script>
     </div>
-
-    <div id="apod-content">
-        <p>Cargando la imagen astronómica del día...</p>
-    </div>
-
-    </div>
-    </section>
-    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./js/api.js"></script>
 </body>
 
 </html>
