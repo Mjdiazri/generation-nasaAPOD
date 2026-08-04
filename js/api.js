@@ -40,9 +40,8 @@ document.addEventListener('DOMContentLoaded', getTodayApod);
 
 //Codigo consultar fecha
 
-const fechaUsuario = document.getElementById('fecha');
+const fechaUsuario = document.getElementById('calendario');
 const btnFecha = document.getElementById('botonBuscarFecha');
-
 
 btnFecha.addEventListener('click', function(){
     console.log(fechaUsuario.value);
