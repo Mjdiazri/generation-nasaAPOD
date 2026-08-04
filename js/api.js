@@ -1,3 +1,5 @@
+import {guardarFavorito,mostrarFavoritos} from "./favorites.js";
+
 const API_KEY = 'eINdnnn7fiWUYjBQXPpqcHn2pvw0hcHjYpjoMAuK';
 const BASE_URL = 'https://api.nasa.gov/planetary/apod';
 
@@ -33,8 +35,23 @@ function renderApod(data) {
     <h2>${data.title}</h2>
     <p><strong>Fecha:</strong> ${data.date}</p>
     ${mediaElement}
+
+    <button id="btnFavorito">
+    se agrega a favoritos
+    </button>
+
     <p style="text-align: justify; line-height: 1.6;">${data.explanation}</p>
   `;
+
+  document
+  .getElementById("btnFavorito")
+  .addEventListener("click", () => {
+    guardarFavorito(data);
+    mostrarFavoritos(
+        document.getElementById("listaFavoritos"),
+        renderApod
+    );
+  });
 }
 
 
@@ -45,9 +62,13 @@ function setupDateLimits() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   setupDateLimits();
-  getApod(); 
+  getApod();
+  mostrarFavoritos(
+    document.getElementById("listaFavoritos"),
+    renderApod
+  );
 });
 
 if (btnFecha && fechaUsuario) {
@@ -68,3 +89,13 @@ if (btnFecha && fechaUsuario) {
     getApod(fechaSeleccionada);
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupDateLimits();
+  getApod();
+
+  mostrarFavoritos(
+      document.getElementById("listaFavoritos"),
+      renderApod
+  );
+});
