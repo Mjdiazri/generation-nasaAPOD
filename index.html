@@ -2,57 +2,33 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NASA APOD</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA APOD</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-  <header>
-    <h1 class="nasa">NASA Astronomy Picture of the Day</h1>
-  </header>
+    <h1>Imagen Astronómica del Día (NASA)</h1>
 
-  <main class="container">
-    <section class="apod-card">
-      <div id="apod-content">
-        <p>Cargando la imagen del día...</p>
-      </div>
-    </section>
-  </main>
+    <!-- Sección de filtro de fecha -->
+    <div class="buscador">
+        <label for="fecha">Selecciona una fecha: </label>
+        <input type="date" id="fecha">
+        <button id="buscarFecha">Buscar</button>
+        <p>Tu Descubirmiento</p>
 
-  <div class="fechas">
-    <section class="buscarFecha">
-      <p class="descubre"> Descubre el universo </p>
-      <label class="calendario">Elige una fecha:</label>
-      <input type="date" id="calendario">
-      <button type="submit" class="botonBuscarFecha" id="botonBuscarFecha">
-        Buscar
-      </button>
-      <div class="fechasFuturas" id="fechasFuturas">
-        <p> </p>
+    </div>
 
-      </div>
+    <div id="apod-content">
+        <p>Cargando la imagen astronómica del día...</p>
+    </div>
+
+    </div>
     </section>
 
-    <section class="fotoDia">
-      <p>Tu Descubirmiento</p>
-      <main class="container">
-        <section class="apod-card">
-          <div id="apod-content">
-            <p>Cargando la imagen del día...</p>
-          </div>
-        </section>
-      </main>
-
-    </section>
-
-  </div>
-
-
-  <script src="api.js"></script>
-  <script src="selectorFechas.js"></script>
+    <script src="./js/api.js"></script>
 </body>
 
 </html>

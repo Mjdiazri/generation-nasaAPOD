@@ -1,79 +1,70 @@
 const API_KEY = 'eINdnnn7fiWUYjBQXPpqcHn2pvw0hcHjYpjoMAuK';
-const URL = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`;
-
+const BASE_URL = 'https://api.nasa.gov/planetary/apod';
 
 const apodContent = document.getElementById('apod-content');
+const fechaUsuario = document.getElementById('fecha');
+const btnFecha = document.getElementById('buscarFecha');
 
-// Función para obtener la APOD del día actual
-async function getTodayApod() {
+async function getApod(date = '') {
+  apodContent.innerHTML = '<p>Cargando información de la NASA...</p>';
+
   try {
-    const response = await fetch(URL);
-    
+    const url = `${BASE_URL}?api_key=${API_KEY}${date ? `&date=${date}` : ''}`;
+    const response = await fetch(url);
+
     if (!response.ok) {
-      throw new Error(`Error en la solicitud: ${response.status}`);
+      throw new Error(`Estado: ${response.status} - ${response.statusText}`);
     }
 
     const data = await response.json();
     renderApod(data);
   } catch (error) {
-    apodContent.innerHTML = `<p class="error">Error al cargar la imagen: ${error.message}</p>`;
+    console.error('Error al obtener APOD:', error);
+    apodContent.innerHTML = `<p class="error" style="color: red;">Error al cargar la información: ${error.message}</p>`;
   }
 }
 
-// Función para renderizar título, fecha, media (imagen/video) y explicación
 function renderApod(data) {
-  // Manejo de renderizado si la NASA publica una imagen o un video
   const mediaElement = data.media_type === 'image'
-    ? `<img src="${data.url}" alt="${data.title}" class="apod-media">`
-    : `<iframe src="${data.url}" frameborder="0" allowfullscreen class="apod-media"></iframe>`;
+    ? `<img src="${data.url}" alt="${data.title}" style="max-width: 100%; height: auto;">`
+    : `<iframe src="${data.url}" frameborder="0" allowfullscreen style="width: 100%; height: 400px;"></iframe>`;
 
   apodContent.innerHTML = `
     <h2>${data.title}</h2>
-    <p class="date"><strong>Fecha:</strong> ${data.date}</p>
+    <p><strong>Fecha:</strong> ${data.date}</p>
     ${mediaElement}
-    <p class="explanation">${data.explanation}</p>
+    <p style="text-align: justify; line-height: 1.6;">${data.explanation}</p>
   `;
 }
 
-// Ejecutar al cargar la página
-document.addEventListener('DOMContentLoaded', getTodayApod);
 
-//Codigo consultar fecha
-
-const fechaUsuario = document.getElementById('fecha');
-const btnFecha = document.getElementById('botonBuscarFecha');
-
-
-btnFecha.addEventListener('click', function(){
-    console.log(fechaUsuario.value);
-    const hoy = new Date().toISOString();
-    
-    if(fechaUsuario.value < hoy){
-      console.log("fecha ok")
-      buscarDatosFecha();
-      pruebaDatosFecha(); 
-    } else{
-      console.log('fecha futura')
-    }
-       
-})
-
-
-async function  buscarDatosFecha() {
-    const responseApi = await fetch(`${URL}&date=${fechaUsuario.value}`);
-    if(! responseApi.ok) {
-        console.log(`\nEstado solicitud: ${responseApi.status} - ${responseApi.statusText}`);
-        return null;
-    }  
-    return await responseApi.json();  
+function setupDateLimits() {
+  if (fechaUsuario) {
+    const hoy = new Date().toISOString().split('T')[0];
+    fechaUsuario.max = hoy;
+  }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  setupDateLimits();
+  getApod(); 
+});
 
-async function pruebaDatosFecha(){
-    const datosResponse = await buscarDatosFecha();
-    if (datosResponse === null){
-        console.log("\nDatos no encontrados")
-    } else {
-        console.log(`\nFecha buscada: ${datosResponse.date} \nExplicacion: ${datosResponse.explanation}`);
-    }     
+if (btnFecha && fechaUsuario) {
+  btnFecha.addEventListener('click', () => {
+    const fechaSeleccionada = fechaUsuario.value;
+    const hoy = new Date().toISOString().split('T')[0];
+
+    if (!fechaSeleccionada) {
+      alert('Por favor selecciona una fecha válida.');
+      return;
+    }
+
+    if (fechaSeleccionada > hoy) {
+      alert('No puedes seleccionar fechas futuras.');
+      return;
+    }
+
+    getApod(fechaSeleccionada);
+  });
 }
