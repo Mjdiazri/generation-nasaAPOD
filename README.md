@@ -7,7 +7,7 @@ Crear una aplicación web interactiva que muestre la "Astronomy Picture of the D
 eINdnnn7fiWUYjBQXPpqcHn2pvw0hcHjYpjoMAuK
 
 # Integrantes :
-Monica Jazmin Diaz|
+Monica Jazmin Diaz |
 Rhonald Stevend Parra | 
 Sebastián Cruz Méndez |
 Valeria Diaz
