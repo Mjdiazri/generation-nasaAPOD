@@ -52,7 +52,11 @@ btnFecha.addEventListener('click', function(){
       buscarDatosFecha();
       pruebaDatosFecha(); 
     } else{
-      console.log('fecha futura')
+        Swal.fire({
+        icon: "error",
+        title: "Fecha invalida!",
+        text: "No podemos viajar al futuro. La NASA solo tiene registros astronómicos",
+      });
     }
        
 })
