@@ -1,0 +1,46 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  color: #58a6ff;
+}
+
+.apod-card {
+  background-color: #161b22;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  text-align: center;
+}
+
+.apod-media {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 15px 0;
+}
+
+iframe.apod-media {
+  width: 100%;
+  height: 380px;
+}
+
+.explanation {
+  text-align: justify;
+  line-height: 1.6;
+}
+
+.error {
+  color: #f85149;
+}

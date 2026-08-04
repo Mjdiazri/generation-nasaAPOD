@@ -1,24 +1,38 @@
-const API_KEY = 'eINdnnn7fiWUYjBQXPpqcHn2pvw0hcHjYpjoMAuK'; // Puedes usar DEMO_KEY o registrarte en api.nasa.gov
-const BASE_URL = 'https://api.nasa.gov/planetary/apod';
+const API_KEY = 'eINdnnn7fiWUYjBQXPpqcHn2pvw0hcHjYpjoMAuK';
+const URL = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`;
 
+const apodContent = document.getElementById('apod-content');
 
-/**
- * Obtiene la APOD de la NASA para una fecha específica (o el día de hoy si no se envía fecha).
- * @param {string} date
- */
-export async function fetchApod(date = '') {
+// Función para obtener la APOD del día actual
+async function getTodayApod() {
   try {
-    const url = `${BASE_URL}?api_key=${API_KEY}${date ? `&date=${date}` : ''}`;
-    const response = await fetch(url);
-
+    const response = await fetch(URL);
+    
     if (!response.ok) {
-      throw new Error(`Error en la petición: ${response.statusText}`);
+      throw new Error(`Error en la solicitud: ${response.status}`);
     }
 
     const data = await response.json();
-    return data;
+    renderApod(data);
   } catch (error) {
-    console.error('Error obteniendo APOD:', error);
-    throw error;
+    apodContent.innerHTML = `<p class="error">Error al cargar la imagen: ${error.message}</p>`;
   }
 }
+
+// Función para renderizar título, fecha, media (imagen/video) y explicación
+function renderApod(data) {
+  // Manejo de renderizado si la NASA publica una imagen o un video
+  const mediaElement = data.media_type === 'image'
+    ? `<img src="${data.url}" alt="${data.title}" class="apod-media">`
+    : `<iframe src="${data.url}" frameborder="0" allowfullscreen class="apod-media"></iframe>`;
+
+  apodContent.innerHTML = `
+    <h2>${data.title}</h2>
+    <p class="date"><strong>Fecha:</strong> ${data.date}</p>
+    ${mediaElement}
+    <p class="explanation">${data.explanation}</p>
+  `;
+}
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', getTodayApod);
